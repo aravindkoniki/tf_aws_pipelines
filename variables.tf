@@ -1,6 +1,7 @@
 variable "region" {
   type        = string
   description = "Region for the resource to deploy"
+  default     = "eu-west-1"
 }
 
 

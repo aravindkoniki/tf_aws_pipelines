@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Starting Static Analysis with Checkov"
+      - apt-get update && apt-get install -y checkov
+  build:
+    commands:
+      - checkov -d .
+artifacts:
+  files:
+    - '**/*'

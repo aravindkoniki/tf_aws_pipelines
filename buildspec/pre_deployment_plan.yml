@@ -10,15 +10,22 @@ phases:
   pre_build:
     commands:
       - echo "Checking branch name..."
-      # Extract the branch name from the environment variable
       - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
       - echo "Running on branch: $BRANCH_NAME"
-      # Run only on branches starting with fix/ or feature/
+      # Only run terraform apply on master branch
       - |
         if [[ "$BRANCH_NAME" != fix/* && "$BRANCH_NAME" != feature/* ]]; then
-          echo "Skipping terraform fmt for branch $BRANCH_NAME"
+          echo "Skipping terraform predeployment plan for branch $BRANCH_NAME"
           exit 0
         fi
   build:
     commands:
-      - terraform fmt
+      - terraform plan -out plan.tfplan
+      - terraform show -json plan.tfplan | jq '.' > plan.json
+  post_build:
+    commands:
+      - echo "Copying Terraform plan to S3..."
+      - aws s3 cp terraform.tfplan s3://<YOUR_BUCKET_NAME>/terraform-plans/
+artifacts:
+  files:
+    - plan.tfplan

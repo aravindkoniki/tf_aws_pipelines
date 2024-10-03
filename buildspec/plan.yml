@@ -4,12 +4,28 @@ phases:
   install:
     commands:
       - echo "Installing Terraform"
-      - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip
+      - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.7.3/terraform_1.7.3_linux_amd64.zip
       - unzip terraform.zip
       - mv terraform /usr/local/bin/
+  pre_build:
+    commands:
+      - echo "Checking branch name..."
+      - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
+      - echo "Running on branch: $BRANCH_NAME"
+      # Only run terraform apply on master branch
+      - |
+        if [[ "$BRANCH_NAME" != "main" ]]; then
+          echo "Skipping terraform plan for branch $BRANCH_NAME"
+          exit 0
+        fi
   build:
     commands:
-      - terraform plan
+      - terraform plan -out plan.tfplan
+      - terraform show -json plan.tfplan | jq '.' > plan.json
+  post_build:
+    commands:
+      - echo "Copying Terraform plan to S3..."
+      - aws s3 cp terraform.tfplan s3://<YOUR_BUCKET_NAME>/terraform-plans/
 artifacts:
   files:
-    - '**/*'
+    - plan.tfplan

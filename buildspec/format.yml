@@ -10,9 +10,8 @@ phases:
   pre_build:
     commands:
       - echo "Checking branch name..."
-      - echo $CODEBUILD_WEBHOOK_HEAD_REF
+      - echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3
       - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
-      - echo "Running on branch: $BRANCH_NAME"
       - |
         if [[ "$BRANCH_NAME" != fix/* && "$BRANCH_NAME" != feature/* ]]; then
           echo "Skipping terraform fmt for branch $BRANCH_NAME"

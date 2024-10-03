@@ -11,8 +11,7 @@ phases:
     commands:
       - echo "Checking branch name..."
       - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
-      - echo "Running on branch: $BRANCH_NAME"
-      # Only run terraform apply on master branch
+      - echo "Running on branch - $BRANCH_NAME"
       - |
         if [[ "$BRANCH_NAME" != fix/* && "$BRANCH_NAME" != feature/* ]]; then
           echo "Skipping terraform predeployment plan for branch $BRANCH_NAME"

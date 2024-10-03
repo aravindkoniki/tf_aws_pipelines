@@ -6,10 +6,8 @@ phases:
   pre_build:
     commands:
       - echo "Checking branch name..."
-      # Extract the branch name from the environment variable
       - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
-      - echo "Running on branch: $BRANCH_NAME"
-      # Run only on branches starting with fix/ or feature/
+      - "Running on branch - $BRANCH_NAME"
       - |
         if [[ "$BRANCH_NAME" != fix/* && "$BRANCH_NAME" != feature/* ]]; then
           echo "Skipping Checkov analysis for branch $BRANCH_NAME"

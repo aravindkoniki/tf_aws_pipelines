@@ -11,6 +11,7 @@ phases:
     commands:
       - echo "Checking branch name..."
       # Extract the branch name from the environment variable
+      - echo $CODEBUILD_WEBHOOK_HEAD_REF
       - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
       - echo "Running on branch: $BRANCH_NAME"
       # Run only on branches starting with fix/ or feature/

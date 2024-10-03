@@ -1,0 +1,22 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - pip install --no-cache-dir checkov==2.3.246
+  pre_build:
+    commands:
+      - echo "Checking branch name..."
+      - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
+      - "Running on branch - $BRANCH_NAME"
+      - |
+        if [[ "$BRANCH_NAME" != "fix/*" || "$BRANCH_NAME" != "feature/*" ]]; then
+          echo "Skipping Checkov analysis for branch $BRANCH_NAME"
+          exit 0
+        fi
+  build:
+    commands:
+      - checkov -d . --config-file .checkov.module.yaml
+
+artifacts:
+  files:
+    - '**/*'

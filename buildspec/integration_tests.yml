@@ -1,0 +1,10 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Running Integration Tests"
+      - echo 'integration tests'
+artifacts:
+  files:
+    - '**/*'

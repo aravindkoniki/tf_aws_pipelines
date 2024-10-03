@@ -13,7 +13,7 @@ phases:
       - export BRANCH_NAME=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | cut -d/ -f3)
       - echo "Running on branch - $BRANCH_NAME"
       - |
-        if [["$BRANCH_NAME" != "fix" || "$BRANCH_NAME" != "feature"]]; then
+        if [[ "$BRANCH_NAME" != "fix" || "$BRANCH_NAME" != "feature" ]]; then
           echo "Skipping terraform fmt for branch $BRANCH_NAME"
           exit 0
         fi

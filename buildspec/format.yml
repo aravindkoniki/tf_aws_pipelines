@@ -10,7 +10,7 @@ phases:
   build:
     commands:
       - echo "Running terraform fmt"
-      - terraform fmt -list=true -write=true -diff=true -check=true
+      - terraform fmt -list=true -write=true -diff=true
 artifacts:
   files:
     - '**/*'

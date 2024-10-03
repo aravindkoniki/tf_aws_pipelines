@@ -1,6 +1,6 @@
 data "aws_iam_policy_document" "ec2_trust" {
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"

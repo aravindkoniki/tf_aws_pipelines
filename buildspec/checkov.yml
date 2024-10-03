@@ -1,10 +1,8 @@
 version: 0.2
-
 phases:
   install:
     commands:
-      - echo "Starting Linting with tflint"
-      - curl -sL https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+      - pip install --no-cache-dir checkov==2.3.246
   pre_build:
     commands:
       - echo "Checking branch name..."
@@ -14,12 +12,12 @@ phases:
       # Run only on branches starting with fix/ or feature/
       - |
         if [[ "$BRANCH_NAME" != fix/* && "$BRANCH_NAME" != feature/* ]]; then
-          echo "Skipping linting for branch $BRANCH_NAME"
+          echo "Skipping Checkov analysis for branch $BRANCH_NAME"
           exit 0
         fi
   build:
     commands:
-      - tflint -c .tflint.hcl
+      - checkov -d . --config-file .checkov.module.yaml
 
 artifacts:
   files:

@@ -1,0 +1,18 @@
+compact: true
+directory:
+  - module
+download-external-modules: false
+evaluate-variables: true
+external-modules-download-path: .external_modules
+framework: all
+no-guide: false
+output: cli
+quiet: false
+skip-fixes: true
+skip-check:
+  - CKV2_AWS_1    #"Ensure that all NACL are attached to subnets"
+  - CKV2_AWS_11   #"Ensure VPC flow logging is enabled in all VPCs"
+  - CKV2_AWS_12   #"Ensure the default security group of every VPC restricts all traffic"
+  - CKV_SECRET_6  #"Base64 High Entropy String"
+skip-suppressions: true
+soft-fail: true

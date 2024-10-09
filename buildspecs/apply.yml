@@ -19,7 +19,7 @@ phases:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - "echo ## TERRAFORM APPLY : Starting with the Terraform Apply"
       - "terraform --version"
-      - "terraform apply -input=false tfapply"
+      - "terraform apply"
 
 artifacts:
   files:

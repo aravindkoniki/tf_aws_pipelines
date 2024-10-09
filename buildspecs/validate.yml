@@ -18,8 +18,8 @@ phases:
       - "unzip -o terraform.zip"
       - "mv terraform /bin"
       - "rm terraform.zip"
-      - "yum update -y"
-      - "yum install -y curl jq awscli"
+      - "apt-get update -y"
+      - "apt-get install -y curl jq awscli"
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"

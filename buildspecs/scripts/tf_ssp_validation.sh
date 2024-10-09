@@ -23,7 +23,7 @@ tfValidateOutput=$?
 if (( ${tfFormat} == "Y"))
 then
     echo "## VALIDATION : Formatting Terraform code ..."
-    terraform fmt -recursive
+    terraform fmt -recursive -list=true -write=true -diff=true
 fi
 tfFormatOutput=$?
 

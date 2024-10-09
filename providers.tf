@@ -11,3 +11,12 @@ terraform {
     encrypt        = true
   }
 }
+
+provider "aws" {
+  region = var.region
+  alias  = "MY_DEV_ENVIRONMENT"
+  assume_role {
+    role_arn    = "arn:aws:iam::767847069565:role/code-pipeline-dev-account-role"
+    external_id = "cross_account_codepipeline"
+  }
+}

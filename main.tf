@@ -14,7 +14,7 @@ resource "aws_iam_role_policy_attachment" "admin_policy_attachment" {
 # Create IAM Role
 resource "aws_iam_role" "my_dev_admin_role" {
   provider           = aws.MY_DEV_ENVIRONMENT
-  name               = "my_dev_AdministratorRole"
+  name               = "MY_DEV_AdministratorRole"
   assume_role_policy = data.aws_iam_policy_document.ec2_trust.json
 }
 
